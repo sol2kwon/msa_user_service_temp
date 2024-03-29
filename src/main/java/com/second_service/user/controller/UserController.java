@@ -1,30 +1,41 @@
 package com.second_service.user.controller;
 
 import com.second_service.user.dto.UserDto;
+import com.second_service.user.repository.UserEntity;
 import com.second_service.user.service.UserService;
 import com.second_service.user.vo.GreetingVO;
 import com.second_service.user.vo.RequestUser;
 import com.second_service.user.vo.ResponseUser;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/")
-public class UserController {
+import java.util.ArrayList;
+import java.util.List;
 
+@RestController
+@RequestMapping("/user-service")
+@Slf4j
+public class UserController {
+    private final Environment env;
+    private final UserService userService;
     @Autowired
-    private UserService userService;
+    public UserController(UserService userService, Environment env){
+        this.env = env;
+        this.userService = userService;
+    }
 
     @Autowired
     private GreetingVO greeting;
 
     @GetMapping("/heath_check")
     public String status(){
-        return "It's Working in User Service";
+        return String.format("It's Working in User Service, port : %s", env.getProperty("local.server.port"));
     }
 
     @GetMapping("/welcome")
@@ -43,5 +54,37 @@ public class UserController {
 
         //성공(201)
         return ResponseEntity.status(HttpStatus.CREATED).body(responseUser);
+    }
+
+    /**
+     * [전체 사용자 조회]
+     * 전체 사용자를 조회한다.
+     * 조회된 사용자를 ResponseUser에 담아 상태코드 값과 함께 반환한다.
+     * */
+    @GetMapping("/users")
+    public ResponseEntity<List<ResponseUser>> getUsers() {
+        Iterable<UserEntity> userList = userService.getUserByAll();
+
+        List<ResponseUser> result = new ArrayList<>();
+        userList.forEach(v -> {
+            result.add(new ModelMapper().map(v, ResponseUser.class));
+        });
+
+        return ResponseEntity.status(HttpStatus.OK).body(result);
+    }
+
+    /**
+     * [사용자 정보와 주문정보 조회]
+     * UserId 값을 가지고 사용자 정보를 조회한다.
+     * 사용자 정보가 없다면 "User not found"를 띄운다.
+     * 조회된 사용자 정보를 최종 ResponseUser으로 변경하여 반환한다.(사용자정보, 주문정보)
+     * */
+    @GetMapping("/users/{userId}")
+    public ResponseEntity<ResponseUser> getUsers(@PathVariable("userId") String userId) {
+        UserDto userDto = userService.getUserByUserId(userId);
+        ModelMapper mapper = new ModelMapper();
+        ResponseUser responseUser = mapper.map(userDto, ResponseUser.class);
+
+        return ResponseEntity.status(HttpStatus.OK).body(responseUser);
     }
 }
