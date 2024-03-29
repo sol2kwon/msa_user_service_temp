@@ -1,4 +1,4 @@
-package com.second_service.user.vo;
+package com.userservice.userservice.vo;
 
 import lombok.Data;
 

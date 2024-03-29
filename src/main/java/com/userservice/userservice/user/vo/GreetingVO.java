@@ -1,4 +1,4 @@
-package com.second_service.user.vo;
+package com.userservice.userservice.user.vo;
 
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;

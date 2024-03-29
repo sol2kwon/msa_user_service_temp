@@ -1,4 +1,4 @@
-package com.second_service.user;
+package com.userservice.userservice.user;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

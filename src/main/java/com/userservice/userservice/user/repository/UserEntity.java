@@ -1,4 +1,4 @@
-package com.second_service.user.repository;
+package com.userservice.userservice.user.repository;
 
 import jakarta.persistence.*;
 import lombok.Data;

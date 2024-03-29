@@ -1,7 +1,8 @@
-package com.second_service.user.service;
+package com.userservice.userservice.user.service;
 
-import com.second_service.user.dto.UserDto;
-import com.second_service.user.repository.UserEntity;
+
+import com.userservice.userservice.user.dto.UserDto;
+import com.userservice.userservice.user.repository.UserEntity;
 
 public interface UserService {
     UserDto createUser(UserDto userDto);

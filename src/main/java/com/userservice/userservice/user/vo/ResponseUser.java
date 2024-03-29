@@ -1,4 +1,4 @@
-package com.second_service.user.vo;
+package com.userservice.userservice.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;

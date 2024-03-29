@@ -1,13 +1,12 @@
-package com.second_service.user.service;
+package com.userservice.userservice.user.service;
 
-import com.second_service.user.dto.UserDto;
-import com.second_service.user.repository.UserEntity;
-import com.second_service.user.repository.UserRepository;
-import com.second_service.user.vo.ResponseOrder;
+import com.userservice.userservice.user.dto.UserDto;
+import com.userservice.userservice.user.repository.UserEntity;
+import com.userservice.userservice.user.repository.UserRepository;
+import com.userservice.userservice.vo.ResponseOrder;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.UUID;
 
 @Service

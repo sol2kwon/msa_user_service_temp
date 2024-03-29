@@ -1,11 +1,11 @@
-package com.second_service.user.controller;
+package com.userservice.userservice.user.controller;
 
-import com.second_service.user.dto.UserDto;
-import com.second_service.user.repository.UserEntity;
-import com.second_service.user.service.UserService;
-import com.second_service.user.vo.GreetingVO;
-import com.second_service.user.vo.RequestUser;
-import com.second_service.user.vo.ResponseUser;
+import com.userservice.userservice.user.dto.UserDto;
+import com.userservice.userservice.user.repository.UserEntity;
+import com.userservice.userservice.user.service.UserService;
+import com.userservice.userservice.user.vo.GreetingVO;
+import com.userservice.userservice.vo.RequestUser;
+import com.userservice.userservice.vo.ResponseUser;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
