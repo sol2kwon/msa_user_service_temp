@@ -1,19 +1,19 @@
-/*
-package com.second_service.user.security;
+
+package com.userservice.userservice.user.security;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.second_service.user.dto.UserDto;
-import com.second_service.user.service.UserService;
-import com.second_service.user.vo.RequestLogin;
+
+import com.userservice.userservice.user.service.UserService;
+import com.userservice.userservice.user.vo.RequestLogin;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -31,7 +31,6 @@ import java.util.Date;
 
 @Slf4j
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-
     private UserService userService;
     private Environment environment;
 
@@ -43,21 +42,22 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     }
 
     @Override
-    public Authentication attemptAuthentication(HttpServletRequest req, HttpServletResponse res)
-            throws AuthenticationException {
+    public Authentication attemptAuthentication(HttpServletRequest req,
+                                                HttpServletResponse res) throws AuthenticationException {
         try {
-
-            RequestLogin creds = new ObjectMapper().readValue(req.getInputStream(), RequestLogin.class);
+            RequestLogin requestLogin = new ObjectMapper().readValue(req.getInputStream(), RequestLogin.class);
 
             return getAuthenticationManager().authenticate(
-                    new UsernamePasswordAuthenticationToken(creds.getEmail(), creds.getPassword(), new ArrayList<>()));
+                    new UsernamePasswordAuthenticationToken(requestLogin.getEmail(), requestLogin.getPassword(), new ArrayList<>()));
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
+}
 
-    @Override
+
+  /*  @Override
     protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
 
@@ -70,8 +70,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
         Instant now = Instant.now();
 //변경된거 확인하기
-      */
-/*  String token = Jwts.builder()
+
+  String token = Jwts.builder()
                 
                 .subject(userDetails.getUserId())
                 .expiration(Date.from(now.plusMillis(Long.parseLong(environment.getProperty("token.expiration_time")))))
@@ -80,8 +80,8 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
                 .compact();
 
         res.addHeader("token", token);
-        res.addHeader("userId", userDetails.getUserId());*//*
+        res.addHeader("userId", userDetails.getUserId());
 
-    }
-}
-*/
+    }*/
+
+
