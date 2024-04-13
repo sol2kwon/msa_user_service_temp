@@ -4,16 +4,17 @@ package com.userservice.userservice.user.security;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.userservice.userservice.user.dto.UserDto;
 import com.userservice.userservice.user.service.UserService;
 import com.userservice.userservice.user.vo.RequestLogin;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -28,11 +29,13 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
+import java.util.Objects;
 
 @Slf4j
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     private UserService userService;
     private Environment environment;
+
 
     public AuthenticationFilter(AuthenticationManager authenticationManager,
                                    UserService userService, Environment environment) {
@@ -54,34 +57,34 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
             throw new RuntimeException(e);
         }
     }
-}
 
-
-  /*  @Override
+    @Override
     protected void successfulAuthentication(HttpServletRequest req, HttpServletResponse res, FilterChain chain,
                                             Authentication auth) throws IOException, ServletException {
 
         String userName = ((User) auth.getPrincipal()).getUsername();
         UserDto userDetails = userService.getUserDetailsByEmail(userName);
 
-        byte[] secretKeyBytes = Base64.getEncoder().encode(environment.getProperty("token.secret").getBytes());
+        //byte[] secretKeyBytes = Base64.getEncoder().encode(environment.getProperty("token.secret").getBytes());
 
-        SecretKey secretKey = Keys.hmacShaKeyFor(secretKeyBytes);
+        SecretKey secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS512);
 
         Instant now = Instant.now();
-//변경된거 확인하기
 
-  String token = Jwts.builder()
-                
-                .subject(userDetails.getUserId())
-                .expiration(Date.from(now.plusMillis(Long.parseLong(environment.getProperty("token.expiration_time")))))
-                .issuedAt(Date.from(now))
+        String token = Jwts.builder()
+                .setSubject(userDetails.getUserId())
+                .setExpiration(Date.from(now.plusMillis(Long.parseLong(Objects.requireNonNull(environment.getProperty("token.expiration_time"))))))
+                .setIssuedAt(Date.from(now))
                 .signWith(secretKey)
                 .compact();
 
+        // 위변조 방지를 위하여 토큰 값과, 유저아이디 값을 헤더에 저장
         res.addHeader("token", token);
         res.addHeader("userId", userDetails.getUserId());
+    }
+}
 
-    }*/
+
+
 
 
