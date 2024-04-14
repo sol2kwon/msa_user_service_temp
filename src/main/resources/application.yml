@@ -41,6 +41,6 @@ greeting:
 
 token:
   expiration_time: 86400000 # 60초 * 60분 * 24시간 * 1000
-  secret: user_token
+  secret: user_tokenkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
 
 
