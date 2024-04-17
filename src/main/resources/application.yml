@@ -45,8 +45,13 @@ eureka:
 greeting:
   message: Welcome! How are you?
 
+
 #token:
 #  expiration_time: 86400000 # 60초 * 60분 * 24시간 * 1000
 #  secret: user_tokenkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh, health, beans
 
