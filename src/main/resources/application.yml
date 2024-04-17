@@ -2,6 +2,13 @@ server:
   port: 0
 
 spring:
+  cloud:
+    config:
+      name: ecommerce # yml 파일명 앞부분
+      enabled: true
+  config:
+    import: optional:configserver:http://localhost:8888 # bootstrap yml을 읽지 못하여 추가. 공식문서 참고
+
   application:
     name: user-service
   datasource:
@@ -9,7 +16,6 @@ spring:
     url: jdbc:mariadb://localhost:3306/msa?characterEncoding=UTF-8&serverTimezone=UTC
     username: root
     password: 1234
-
 
   jpa:
     hibernate:
@@ -39,8 +45,8 @@ eureka:
 greeting:
   message: Welcome! How are you?
 
-token:
-  expiration_time: 86400000 # 60초 * 60분 * 24시간 * 1000
-  secret: user_tokenkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
+#token:
+#  expiration_time: 86400000 # 60초 * 60분 * 24시간 * 1000
+#  secret: user_tokenkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
 
 
