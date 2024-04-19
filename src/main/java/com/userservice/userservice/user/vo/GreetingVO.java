@@ -9,4 +9,5 @@ import org.springframework.stereotype.Component;
 public class GreetingVO {
     @Value("${greeting.message}")
     private String message;
+
 }

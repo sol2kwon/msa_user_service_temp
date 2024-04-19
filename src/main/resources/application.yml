@@ -1,16 +1,36 @@
 server:
   port: 0
 
+
+
 spring:
   cloud:
     config:
-      name: ecommerce # yml 파일명 앞부분
+      name: ecommerce
       enabled: true
+      profile: local
   config:
-    import: optional:configserver:http://localhost:8888 # bootstrap yml을 읽지 못하여 추가. 공식문서 참고
+      import: optional:configserver:http://localhost:8888
+
+  #  config:
+#    import: "optional:configserver:"
+#  cloud:
+#    config:
+#      uri: http://localhost:8888/
+#      name: ecommerce
+#  config:
+#    import: "optional:configserver:http://localhost:8888/"
+#  cloud:
+#    config:
+#      name: ecommerce
+#      profile: local
+#      enabled: true
+
 
   application:
     name: user-service
+#  profiles:
+#    active: local
   datasource:
     driver-class-name: org.mariadb.jdbc.Driver
     url: jdbc:mariadb://localhost:3306/msa?characterEncoding=UTF-8&serverTimezone=UTC
@@ -35,12 +55,12 @@ logging:
 eureka:
   instance:
     hostname: localhost
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}}
+    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
   client:
     register-with-eureka: true
     fetch-registry: true
     service-url:
-      defaultZone: http://localhost:8761/eureka
+      defaultZone: http://127.0.0.1:8761/eureka
 
 greeting:
   message: Welcome! How are you?

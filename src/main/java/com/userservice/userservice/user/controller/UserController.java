@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,8 +23,14 @@ import java.util.List;
 @RequestMapping("/")
 @Slf4j
 public class UserController {
-    private final Environment env;
     private final UserService userService;
+    private final Environment env;
+ /*   @Value("${server.port}")
+    private String serverPort;
+
+  */
+
+
     @Autowired
     public UserController(UserService userService, Environment env){
         this.env = env;
@@ -39,7 +46,10 @@ public class UserController {
                 +", port(local.server.port)=" +env.getProperty("local.server.port")
                 +", port(server.port)=" +env.getProperty("server.port")
                 +", token secret" +env.getProperty("token.secret")
-                +", token expiration time=" +env.getProperty("token.expiration.time"));
+                +", token expiration time=" +env.getProperty("token.expiration.time")
+                        +", 테에스트!!!!!=" +env.getProperty("token.expiration_time")
+
+         );
     }
 
     @GetMapping("/welcome")
