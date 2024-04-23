@@ -42,6 +42,7 @@ dependencies {
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '3.2.4'
+	implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
 }
 
 dependencyManagement {
