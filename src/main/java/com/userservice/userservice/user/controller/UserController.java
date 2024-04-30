@@ -4,13 +4,13 @@ import com.userservice.userservice.user.dto.UserDto;
 import com.userservice.userservice.user.repository.UserEntity;
 import com.userservice.userservice.user.service.UserService;
 import com.userservice.userservice.user.vo.GreetingVO;
-import com.userservice.userservice.vo.RequestUser;
-import com.userservice.userservice.vo.ResponseUser;
+
+import com.userservice.userservice.user.vo.RequestUser;
+import com.userservice.userservice.user.vo.ResponseUser;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,8 +46,7 @@ public class UserController {
                 +", port(local.server.port)=" +env.getProperty("local.server.port")
                 +", port(server.port)=" +env.getProperty("server.port")
                 +", token secret" +env.getProperty("token.secret")
-                +", token expiration time=" +env.getProperty("token.expiration.time")
-                        +", 테에스트!!!!!=" +env.getProperty("token.expiration_time")
+                +", comment!!!!!=" +env.getProperty("test.comment")
 
          );
     }
@@ -96,9 +95,11 @@ public class UserController {
     @GetMapping("/users/{userId}")
     public ResponseEntity<ResponseUser> getUsers(@PathVariable("userId") String userId) {
         UserDto userDto = userService.getUserByUserId(userId);
+        log.info("userDto {}",userDto);
         ModelMapper mapper = new ModelMapper();
         ResponseUser responseUser = mapper.map(userDto, ResponseUser.class);
 
+        log.info("responseUser {}",responseUser);
         return ResponseEntity.status(HttpStatus.OK).body(responseUser);
     }
 }

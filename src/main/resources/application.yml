@@ -6,9 +6,10 @@ server:
 spring:
   cloud:
     config:
-      name: ecommerce
+      name: userService
+      #name: ecommerce
       enabled: true
-      profile: local
+      #profile: test
   config:
       import: optional:configserver:http://localhost:8888
 
@@ -30,17 +31,18 @@ spring:
   application:
     name: user-service
   rabbitmq:
-    host: 127.0.0.1
+    # host: 127.0.0.1
+    host: localhost
     port: 5672
-    username: test
-    password: test
-#  profiles:
-#    active: local
-  datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/msa?characterEncoding=UTF-8&serverTimezone=UTC
-    username: root
-    password: 1234
+    username: guest
+    password: guest
+  profiles:
+    active: local
+#  datasource:
+#    driver-class-name: org.mariadb.jdbc.Driver
+#    url: jdbc:mariadb://localhost:3306/msa?characterEncoding=UTF-8&serverTimezone=UTC
+#    username: root
+#    password: 1234
 
   jpa:
     hibernate:

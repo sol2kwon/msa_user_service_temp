@@ -1,6 +1,5 @@
 package com.userservice.userservice.user.dto;
-
-import com.userservice.userservice.vo.ResponseOrder;
+import com.userservice.userservice.user.vo.ResponseOrder;
 import lombok.Data;
 
 import java.util.Date;
@@ -14,5 +13,5 @@ public class UserDto {
     private String userId;
     private Date createAt;
     private String encryptedPwd;
-    private List<ResponseOrder> resOrder;
+    private List<ResponseOrder> orders;
 }

@@ -1,6 +1,6 @@
-package com.userservice.userservice.vo;
-
+package com.userservice.userservice.user.vo;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.userservice.userservice.user.vo.ResponseOrder;
 import lombok.Data;
 
 import java.util.List;
