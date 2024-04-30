@@ -58,6 +58,7 @@ logging:
   level:
     org.hibernate.SQL: debug
     org.hibernate.type: trace
+    com.userservice.userservice.user.client: debug
 
 eureka:
   instance:

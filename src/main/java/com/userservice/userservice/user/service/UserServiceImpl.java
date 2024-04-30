@@ -1,9 +1,11 @@
 package com.userservice.userservice.user.service;
 
+import com.userservice.userservice.user.client.OrderServiceClient;
 import com.userservice.userservice.user.dto.UserDto;
 import com.userservice.userservice.user.repository.UserEntity;
 import com.userservice.userservice.user.repository.UserRepository;
 import com.userservice.userservice.user.vo.ResponseOrder;
+import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
@@ -31,14 +33,15 @@ public class UserServiceImpl implements UserService{
     BCryptPasswordEncoder passwordEncoder;
     Environment env;
     RestTemplate template;
-
+    OrderServiceClient orderServiceClient;
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, Environment env,RestTemplate template ){
+    public UserServiceImpl(UserRepository userRepository, BCryptPasswordEncoder passwordEncoder, Environment env,RestTemplate template, OrderServiceClient orderServiceClient ){
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.env = env;
         this.template = template;
+        this.orderServiceClient = orderServiceClient;
     }
 
     @Override
@@ -64,13 +67,25 @@ public class UserServiceImpl implements UserService{
         UserDto userDto =  mapper.map(userEntity,UserDto.class);
 
         //List<ResponseOrder> orders = new ArrayList<>();
-        String orderUrl = String.format(Objects.requireNonNull(env.getProperty("order_service.url")),userId);
-        System.out.println("주문서비스 보고 지울거임"+env.getProperty("order_service.url"));
-        ResponseEntity<List<ResponseOrder>> orderListResponse =
-        template.exchange(orderUrl, HttpMethod.GET, null,
-                new ParameterizedTypeReference<List<ResponseOrder>>() {
-        });
-        List<ResponseOrder> orderList = orderListResponse.getBody();
+//        String orderUrl = String.format(Objects.requireNonNull(env.getProperty("order_service.url")),userId);
+//        ResponseEntity<List<ResponseOrder>> orderListResponse =
+//        template.exchange(orderUrl, HttpMethod.GET, null,
+//                new ParameterizedTypeReference<List<ResponseOrder>>() {
+//        });
+//        List<ResponseOrder> orderList = orderListResponse.getBody();
+//        userDto.setOrders(orderList);
+
+//        List<ResponseOrder> orderList = null;
+//        try {
+//            orderList = orderServiceClient.getOrders(userId);
+//
+//        }catch (FeignException exception){
+//            log.error(exception.getMessage());
+//
+//        }
+//        userDto.setOrders(orderList);
+
+        List<ResponseOrder> orderList = orderServiceClient.getOrders(userId);
         userDto.setOrders(orderList);
 
         return userDto;

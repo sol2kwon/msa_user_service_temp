@@ -43,6 +43,7 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-config'
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '3.2.4'
 	implementation 'org.springframework.cloud:spring-cloud-starter-bus-amqp'
+	implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-openfeign', version: '4.1.1'
 }
 
 dependencyManagement {
